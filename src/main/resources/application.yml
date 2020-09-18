@@ -1,0 +1,66 @@
+#开发环境配置
+server:
+  #服务器端口号
+  port: 8081
+  #应用的访问路径
+  servlet:
+    context-path: /
+  #防止get请求乱码，Tomcat的URI编码格式默认UTF-8
+  tomcat:
+    uri-encoding: UTF-8
+#Spring配置
+spring:
+  #启用配置
+  profiles:
+    #本地配置（dev-开发环境，test-测试环境）
+    active: dev
+  #模板引擎
+  thymeleaf:
+    mode: HTML
+    encoding: UTF-8
+    #禁用缓存
+    cache: false
+  #时间格式设置
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss
+    #全局设置pojo或被@JsonInclude注解的属性的序列化方式,不为空的属性才会序列化
+    default-property-inclusion: non_null
+    time-zone: GMT+8
+  #配置文件传输
+  servlet:
+    multipart:
+      #开启传输
+      enabled: true
+      #单个文件的大小
+      max-file-size: 100MB
+      #单次请求文件的总大小
+      max-request-size: 150MB
+  #redis
+  redis:
+    open: true  # 是否开启redis缓存  true开启   false关闭
+    database: 0
+    host: localhost
+    port: 6379
+    password:    # 密码（默认为空）
+    timeout: 6000ms  # 连接超时时长（毫秒）
+    jedis:
+      pool:
+        max-active: 1000  # 连接池最大连接数（使用负值表示没有限制）
+        max-wait: -1ms      # 连接池最大阻塞等待时间（使用负值表示没有限制）
+        max-idle: 10      # 连接池中的最大空闲连接
+        min-idle: 5       # 连接池中的最小空闲连接
+# MyBatis
+mybatis:
+  # 配置mapper的扫描，找到所有的mapper.xml映射文件
+  mapper-locations: classpath*:mapper/**/*Mapper.xml
+  # 搜索指定包别名
+  type-aliases-package: com.tcpserver.*.pojo
+
+#指定自定义命名的配置文件
+logging:
+  config: classpath:logback-spring.xml
+  level:
+    org.springframework.web: trace
+#打印日志统一根路径
+log:
+  file: D:/tcpserver/logs
